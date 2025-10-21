@@ -15,6 +15,9 @@ jobs:
   test:
     timeout-minutes: 15
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: read
     steps:
       - name: setup pnpm
         uses: pnpm/action-setup@v4
@@ -30,10 +33,13 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      
+      # 配置 GitHub Packages 认证
       - name: Setup pnpm registry authentication
         run: |
-              pnpm config set @icqqjs:registry https://npm.pkg.github.com/
-              pnpm config set //npm.pkg.github.com/:_authToken ${{ secrets.GITHUB_TOKEN }}
+          pnpm config set @icqqjs:registry https://npm.pkg.github.com/
+          pnpm config set //npm.pkg.github.com/:_authToken ${{ secrets.GITHUB_TOKEN }}
+
       - name: install logger dependencies
         run: pnpm --filter @zhin.js/logger install
 
@@ -48,9 +54,6 @@ jobs:
         
       - name: install dependencies
         run: pnpm install
-        env:
-          # NPM_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
       - name: build packages
         run: pnpm build
@@ -83,6 +86,12 @@ jobs:
         with:
           fetch-depth: 0
       
+      # pub job 也需要配置认证
+      - name: Setup pnpm registry authentication
+        run: |
+          pnpm config set @icqqjs:registry https://npm.pkg.github.com/
+          pnpm config set //npm.pkg.github.com/:_authToken ${{ secrets.GITHUB_TOKEN }}
+
       - name: install logger dependencies
         run: pnpm --filter @zhin.js/logger install
 
@@ -97,9 +106,6 @@ jobs:
         
       - name: install dependencies
         run: pnpm install
-        env:
-          # NPM_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
       - name: build packages
         run: pnpm build
@@ -108,10 +114,10 @@ jobs:
         uses: changesets/action@v1
         id: changesets
         with:
-          version: pnpm bump
+          version: pnpm version
           commit: "chore: update versions"
           title: "chore: update versions"
-          publish: pnpm pub
+          publish: pnpm publish
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
