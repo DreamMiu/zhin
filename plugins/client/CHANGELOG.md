@@ -1,5 +1,11 @@
 # @zhin.js/client
 
+## 1.0.3
+
+### Patch Changes
+
+- b213bbc: fix: 更新 kook 报错
+
 ## 1.0.2
 
 ### Patch Changes
