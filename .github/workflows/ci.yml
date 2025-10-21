@@ -42,7 +42,16 @@ jobs:
 
       - name: build cli
         run: pnpm --filter @zhin.js/cli build
-        
+
+      - name: Create .npmrc file
+        run: |
+          cat > .npmrc << EOF
+          @icqqjs:registry=https://npm.pkg.github.com
+          //npm.pkg.github.com/:_authToken=${GIT_TOKEN}
+          EOF
+        env:
+          GIT_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
       - name: install dependencies
         run: pnpm install
         env:
