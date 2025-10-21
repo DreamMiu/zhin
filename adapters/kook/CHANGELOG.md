@@ -1,5 +1,11 @@
 # @zhin.js/adapter-kook
 
+## 1.0.6
+
+### Patch Changes
+
+- b213bbc: fix: 更新 kook 报错
+
 ## 1.0.5
 
 ### Patch Changes
