@@ -47,7 +47,7 @@ jobs:
         run: pnpm install
         env:
           NPM_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
       
       - name: build packages
         run: pnpm build
@@ -95,8 +95,8 @@ jobs:
       - name: install dependencies
         run: pnpm install
         env:
-          NPM_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # NPM_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
       
       - name: build packages
         run: pnpm build
@@ -110,5 +110,5 @@ jobs:
           title: "chore: update versions"
           publish: pnpm pub
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
+          # NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
